@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Will You Be My Valentine 💖</title>
+<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&family=Pacifico&display=swap" rel="stylesheet">
+<style>
+:root{
+  --pink:#ff5fa2;
+  --bg:#fff0f6;
+}
+*{
+  box-sizing:border-box;
+}
+body{
+  margin:0;
+  font-family:'Poppins',sans-serif;
+  background:linear-gradient(135deg,#ffe0ec,#fff5f9);
+  overflow-x:hidden;
+}
+.container{
+  min-height:100vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:20px;
+}
+.card{
+  background:white;
+  max-width:480px;
+  width:100%;
+  padding:30px 25px 40px;
+  border-radius:22px;
+  box-shadow:0 20px 50px rgba(255,95,162,.25);
+  text-align:center;
+  position:relative;
+}
+.question{
+  font-size:1.4rem;
+  line-height:1.4;
+  margin-bottom:30px;
+}
+.buttons{
+  position:relative;
+  height:110px;
+}
+button{
+  position:absolute;
+  padding:14px 26px;
+  font-size:1rem;
+  border-radius:30px;
+  border:none;
+  cursor:pointer;
+  transition:transform .15s ease;
+}
+#yes{
+  left:20%;
+  background:var(--pink);
+  color:white;
+}
+#no{
+  right:20%;
+  background:#eee;
+}
+button:active{
+  transform:scale(.96);
+}
+.fade{
+  opacity:0;
+  transform:translateY(20px);
+  transition:.6s ease;
+}
+.fade.show{
+  opacity:1;
+  transform:none;
+}
+.hidden{
+  display:none;
+}
+.endline{
+  margin-top:40px;
+  font-family:'Great Vibes',cursive;
+  font-size:2.2rem;
+  line-height:1.6;
+  color:#c24d7a;
+  text-align:center;
+  opacity:0;
+  animation:softReveal 2.2s ease forwards;
+}
+@keyframes softReveal{
+  0%{opacity:0;transform:translateY(20px) scale(0.96)}
+  60%{opacity:1;transform:translateY(0) scale(1.02)}
+  100%{opacity:1;transform:none}
+}
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="card">
+    <div id="q" class="question fade show"></div>
+    <div class="buttons">
+      <button id="yes">Yes 💖</button>
+      <button id="no">No 🙃</button>
+    </div>
+    <div id="end" class="endline hidden"></div>
+  </div>
+</div>
+<script>
+const questions=[
+  "Hey Laadli 💕 ready for a serious question?",
+  "Saumyaa… moro gote katha sunibu?",
+  "Okay now serious 🤭",
+  "Tch filmy kariba?",
+  "Tum meri wali feel ho ❤️",
+  "So… now you know that you are special to me! 💌"
+];
+let idx=0;
+const qEl=document.getElementById('q');
+const noBtn=document.getElementById('no');
+const yesBtn=document.getElementById('yes');
+const endEl=document.getElementById('end');
+qEl.textContent=questions[idx];
+function nextQ(){
+  idx++;
+  if(idx<questions.length){
+    qEl.classList.remove('show');
+    setTimeout(()=>{
+      qEl.textContent=questions[idx];
+      qEl.classList.add('show');
+    },300);
+  }else{
+    document.querySelector('.buttons').classList.add('hidden');
+    endEl.classList.remove('hidden');
+    endEl.innerHTML="Saumya dard hai, dard rahega<br>par agar tu khush hai na<br>toh yeh dil sab sahega 💗<br><span style='font-size:.9rem'>Baaki sorry agar bother kar li…</span>";
+  }
+}
+yesBtn.onclick=()=>{ if(idx===questions.length-1) confetti(); nextQ(); };
+function dodge(){
+  const padding=20;
+  const maxX=window.innerWidth-noBtn.offsetWidth-padding;
+  const maxY=window.innerHeight-noBtn.offsetHeight-padding;
+  const x=Math.random()*maxX+padding/2;
+  const y=Math.random()*maxY+padding/2;
+  noBtn.style.position='fixed';
+  noBtn.style.left=x+'px';
+  noBtn.style.top=y+'px';
+}
+noBtn.onmouseenter=dodge;
+noBtn.onclick=dodge;
+function confetti(){for(let i=0;i<80;i++){const c=document.createElement('div');c.style.position='fixed';c.style.width='8px';c.style.height='8px';c.style.background=`hsl(${Math.random()*360},80%,60%)`;c.style.left=Math.random()*100+'vw';c.style.top='-10px';c.style.borderRadius='50%';c.style.zIndex=9999;document.body.appendChild(c);const fall=c.animate([{transform:'translateY(0)'},{transform:`translateY(${100+Math.random()*50}vh)`}],{duration:1200+Math.random()*800,easing:'ease-out'});fall.onfinish=()=>c.remove();}}
+</script>
+</body>
+</html>
